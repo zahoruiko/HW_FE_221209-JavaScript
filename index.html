@@ -81,10 +81,8 @@
       function showFirstAnswer() {
         let result;
         let wrapper = document.getElementById("info-wrapper");
-        let container = document.createElement("div");
-        container.id = "info-container";
-        let container2 = document.createElement("div");
-        container2.id = "info-container";
+        
+        
         Promise.any([
           new Promise((resolve, reject) => {
             resolve(
@@ -92,6 +90,8 @@
                 .then((data) => data.json())
                 .then((data) => data.slice(0, 10))
                 .then((data) => {
+                  let container = document.createElement("div");
+                  container.id = "info-container";
                   data.forEach((item) => {
                     let itemWrapper = document.createElement("div");
                     itemWrapper.className = "info-item";
@@ -113,6 +113,8 @@
                 .then((data) => data.json())
                 .then((data) => data.slice(0, 10))
                 .then((data) => {
+                  let container = document.createElement("div");
+                  container.id = "info-container";
                   data.forEach((item) => {
                     let itemWrapper = document.createElement("div");
                     itemWrapper.className = "info-item";
@@ -127,9 +129,9 @@
                       " " + item.address.city + 
                       "<br>phone = " + item.phone;
                       
-                    container2.appendChild(itemWrapper);
+                    container.appendChild(itemWrapper);
                   });
-                  return container2;
+                  return container;
                 })
             );
           }),
