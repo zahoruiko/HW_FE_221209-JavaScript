@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #gallery-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .img-item {
+        border: 1px solid gray;
+        padding: 5px;
+        margin: 5px;
+        border-radius: 5px;
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gallery-wrapper"></div>
+
+    <script>
+      //Задание №1
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      sleep(5000).then(() => {
+        console.log("Выполнилось через 5 секунд!");
+      });
+
+      //Задание №2
+      function showImagesGalery() {
+        let wrapper = document.getElementById("gallery-wrapper");
+        fetch("https://jsonplaceholder.typicode.com/photos")
+          .then((data) => data.json())
+          .then((data) => {
+            // Из общего массива берем только первые десять записей
+            data = data.slice(0, 10);
+            // Отображаем изображения выбранных записей
+            data.forEach((element) => {
+              let imgWrapper = document.createElement("div");
+              imgWrapper.className = "img-item";
+              let img = document.createElement("img");
+              img.src = element.thumbnailUrl;
+              img.alt = element.title;
+              img.title = element.title;
+              imgWrapper.appendChild(img);
+              let imgName = document.createElement("h3");
+              imgName.innerHTML = element.title;
+              imgWrapper.appendChild(imgName);
+              wrapper.appendChild(imgWrapper);
+            });
+          });
+      }
+      showImagesGalery();
+
+      // Задание №3
+      function showFirstAnswer() {
+        Promise.any([
+          new Promise((resolve, reject) => {
+            resolve(fetch("https://jsonplaceholder.typicode.com/todos"));
+          }),
+          new Promise((resolve, reject) => {
+            resolve(fetch("https://jsonplaceholder.typicode.com/users"));
+          }),
+        ])
+          .then((data) => data.json())
+          .then((data) => console.log(data)); // 1
+      }
+      showFirstAnswer();
+    </script>
+  </body>
+</html>
