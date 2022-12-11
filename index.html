@@ -11,6 +11,16 @@
         flex-direction: row;
         flex-wrap: wrap;
       }
+      #info-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      #info-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
       .img-item {
         border: 1px solid gray;
         padding: 5px;
@@ -18,10 +28,18 @@
         border-radius: 5px;
         width: 150px;
       }
+      .info-item {
+        border: 1px solid gray;
+        padding: 5px;
+        margin: 5px;
+        border-radius: 5px;
+        width: 300px;
+      }
     </style>
   </head>
   <body>
     <div id="gallery-wrapper"></div>
+    <div id="info-wrapper"></div>
 
     <script>
       //Задание №1
@@ -61,18 +79,66 @@
 
       // Задание №3
       function showFirstAnswer() {
+        let result;
+        let wrapper = document.getElementById("info-wrapper");
+        let container = document.createElement("div");
+        container.id = "info-container";
+        let container2 = document.createElement("div");
+        container2.id = "info-container";
         Promise.any([
           new Promise((resolve, reject) => {
-            resolve(fetch("https://jsonplaceholder.typicode.com/todos"));
+            resolve(
+              fetch("https://jsonplaceholder.typicode.com/todos")
+                .then((data) => data.json())
+                .then((data) => data.slice(0, 10))
+                .then((data) => {
+                  data.forEach((item) => {
+                    let itemWrapper = document.createElement("div");
+                    itemWrapper.className = "info-item";
+                    itemWrapper.innerHTML =
+                      "id = " + item.id +
+                      "<br>userId = " + item.userId +
+                      "<br>title = " + item.title +
+                      "<br>completed = " + item.completed;
+
+                    container.appendChild(itemWrapper);
+                  });
+                  return container;
+                })
+            );
           }),
           new Promise((resolve, reject) => {
-            resolve(fetch("https://jsonplaceholder.typicode.com/users"));
+            resolve(
+              fetch("https://jsonplaceholder.typicode.com/users")
+                .then((data) => data.json())
+                .then((data) => data.slice(0, 10))
+                .then((data) => {
+                  data.forEach((item) => {
+                    let itemWrapper = document.createElement("div");
+                    itemWrapper.className = "info-item";
+                    itemWrapper.innerHTML =
+                      "id = " + item.id +
+                      "<br>name = " + item.name +
+                      "<br>username = " + item.username +
+                      "<br>email = " + item.email +
+                      "<br>address = " + item.address.street +
+                      " " + item.address.suite +
+                      "<br>" + item.address.zipcode +
+                      " " + item.address.city + 
+                      "<br>phone = " + item.phone;
+                      
+                    container2.appendChild(itemWrapper);
+                  });
+                  return container2;
+                })
+            );
           }),
-        ])
-          .then((data) => data.json())
-          .then((data) => console.log(data));
+        ]).then((data) => {
+          wrapper.appendChild(data);
+        });
       }
       showFirstAnswer();
+
     </script>
   </body>
 </html>
