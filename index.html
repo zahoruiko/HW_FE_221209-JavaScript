@@ -42,24 +42,24 @@
     <div id="info-wrapper"></div>
 
     <script>
-      //Задание №1
+      // Task №1
       function sleep(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
 
       sleep(5000).then(() => {
-        console.log("Выполнилось через 5 секунд!");
+        console.log("Completed in 5 seconds!");
       });
 
-      //Задание №2
+      // Task №2
       function showImagesGalery() {
         let wrapper = document.getElementById("gallery-wrapper");
         fetch("https://jsonplaceholder.typicode.com/photos")
           .then((data) => data.json())
           .then((data) => {
-            // Из общего массива берем только первые десять записей
+            // We take only the first ten entries from the total array
             data = data.slice(0, 10);
-            // Отображаем изображения выбранных записей
+            // Displaying images of selected entries
             data.forEach((element) => {
               let imgWrapper = document.createElement("div");
               imgWrapper.className = "img-item";
@@ -77,11 +77,10 @@
       }
       showImagesGalery();
 
-      // Задание №3
+      // Task №3
       function showFirstAnswer() {
         let result;
         let wrapper = document.getElementById("info-wrapper");
-        
         
         Promise.any([
           new Promise((resolve, reject) => {
@@ -96,10 +95,10 @@
                     let itemWrapper = document.createElement("div");
                     itemWrapper.className = "info-item";
                     itemWrapper.innerHTML =
-                      "id = " + item.id +
-                      "<br>userId = " + item.userId +
-                      "<br>title = " + item.title +
-                      "<br>completed = " + item.completed;
+                      "Id = " + item.id +
+                      "<br>UserId = " + item.userId +
+                      "<br>Title = " + item.title +
+                      "<br>Completed = " + item.completed;
 
                     container.appendChild(itemWrapper);
                   });
@@ -119,15 +118,15 @@
                     let itemWrapper = document.createElement("div");
                     itemWrapper.className = "info-item";
                     itemWrapper.innerHTML =
-                      "id = " + item.id +
-                      "<br>name = " + item.name +
-                      "<br>username = " + item.username +
-                      "<br>email = " + item.email +
-                      "<br>address = " + item.address.street +
+                      "Id = " + item.id +
+                      "<br>Name = " + item.name +
+                      "<br>Username = " + item.username +
+                      "<br>Email = " + item.email +
+                      "<br>Address = " + item.address.street +
                       " " + item.address.suite +
                       "<br>" + item.address.zipcode +
                       " " + item.address.city + 
-                      "<br>phone = " + item.phone;
+                      "<br>Phone = " + item.phone;
                       
                     container.appendChild(itemWrapper);
                   });
